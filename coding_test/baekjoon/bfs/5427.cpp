@@ -1,5 +1,5 @@
 /*
-Time : 2022.01.12 (40 min)
+Time : 2022.01.12 (15 min)
 Problem : BOJ5427 (https://www.acmicpc.net/problem/5427)
 Algorithm Type : BFS
 Outline :
@@ -9,7 +9,11 @@ Outline :
 상근이가 있는 칸에 불이 옮겨옴과 동시에 다른 칸으로 이동할 수 있다.
 상근이가 얼마나 빨리 빌딩을 탈출할 수 있는지 출력한다.
 Method :
-
+먼저 BFS를 통해 불을 전파시킨다.
+vis2배열에 불이 몇초에 도달하는지 저장한다.
+이후 상근이가 가는 위치도 BFS를 통해 계산한다.
+이때 기본적인 BFS 조건 이외에, 상근이가 이동하려는 칸에 불이 이미 옮겨붙었다면
+이동할 수 없으므로 해당 조건을 추가한다.
 */
 #include <bits/stdc++.h>
 #define X first
