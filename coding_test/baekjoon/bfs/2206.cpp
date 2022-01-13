@@ -30,8 +30,51 @@ int dy[4] = {0,1,0,-1};
 void solve() {
   int n, m;
   string arr[1000+1];
+  int dist[2][1000+1][1000+1];
+  queue<pair<pii,int> > q;
   cin >> n >> m;  // 세로(x), 가로(y)
+  fill(&dist[0][0][0], &dist[0][0][0]+2*1001*1001, -1);
   for(int i=0; i<n; i++)
     cin >> arr[i];
+  dist[0][0][0] = dist[1][0][0] = 0;
+  q.push(mp(mp(0,0),0));
+  while(!q.empty()) {
+    int x = q.front().first.X;
+    int y = q.front().first.Y;
+    int is_broken = q.front().second; // 이미 부수고 왔는지
+    int d = dist[is_broken][x][y];
+    q.pop();
+    for(int i=0; i<4; i++) {
+      int xx = x + dx[i];
+      int yy = y + dy[i];
+      if(xx<0 || yy<0 || n<=xx || m<=yy) continue;
+      if(is_broken && arr[xx][yy]=='1') continue;
+      if(is_broken) {
+        if(dist[1][xx][yy]==-1 || d+1 < dist[1][xx][yy]) {
+          dist[1][xx][yy] = d+1;
+          q.push(mp(mp(xx,yy),1));
+        } else {
+          // 기존에 도착한 방법이 더 빠름
+        }
+      } else {
+        if(arr[xx][yy]=='1') {
+          if(dist[1][xx][yy]==-1 || d+1 < dist[1][xx][yy]) {
+            dist[1][xx][yy] = d+1;
+            q.push(mp(mp(xx,yy),1));
+          } else {
+            // 전에 방문했으면서 이번 시행보다 빨리 도달할 수 있음.
+          }
+        } else {
+          if(dist[0][xx][yy]!=-1) continue;
+          dist[0][xx][yy] = d+1;
+          q.push(mp(mp(xx,yy),0));
+        }
+      }
+    }
+  }
+  if(dist[0][n-1][m-1]==-1) dist[0][n-1][m-1]=1000000001;
+  if(dist[1][n-1][m-1]==-1) dist[1][n-1][m-1]=1000000001;
+  if(dist[0][n-1][m-1]==1000000001 && dist[1][n-1][m-1]==1000000001) cout << "-1";
+  else cout << min(dist[0][n-1][m-1],dist[1][n-1][m-1])+1;
   return;
 }
