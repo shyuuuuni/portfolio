@@ -27,6 +27,7 @@ void solve1() {
     getline(cin, s);
     stack<char> stk;
     bool flag = true;
+    if(s == ".") break;
     for(auto c : s) {
       if(!flag) break;
       if(c == '(' || c == '[') stk.push(c);
