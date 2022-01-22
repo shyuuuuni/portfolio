@@ -1,5 +1,5 @@
 /*
-Time : 2022.01.19 (25 min)
+Time : 2022.01.20 (30 min)
 Problem : BOJ1600 (https://www.acmicpc.net/problem/1600)
 Algorithm Type : BFS
 Outline :
