@@ -1,5 +1,5 @@
 /*
-Time : 2022.01.06 (1 hour)
+Time : 2022.01.26 (1 hour)
 Problem : BOJ15683 (https://www.acmicpc.net/problem/15683)
 Algorithm Type : Simulation
 Outline :
