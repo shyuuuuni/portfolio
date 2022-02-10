@@ -8,8 +8,10 @@ N개의 숫자로 이루어진 메세지가 주어진다. (숫자는 모두 C보
 먼저 두 수중에 더 많이 등장하는 수가 앞에 위치한다.
 만약 등장하는 횟수가 같다면 먼저 나온 것이 앞에 있어야 한다.
 Method :
-compare함수를 조건에 맞춰 구현하여 해결한다.
-중복을 막기 위해 set을 이용한다.
+<숫자, 등장횟수> 를 저장하는 벡터 v와
+<숫자, 등장순서> 를 저장하는 맵 seq를 이용했다.
+stl sort의 비교함수를 직접 구현하였고, 빈도수로 먼저 비교한 뒤, 빈도수가 같다면
+등장 순서를 비교하여 정렬하였다.
 Example :
 5 2
 2 1 2 1 2
@@ -24,12 +26,17 @@ using namespace std;
 #define mp(X,Y) make_pair((X),(Y))
 #define ll long long
 
-bool compare(const string &a, const string &b) {
+ll n, c, cnt=0;
+map<ll,ll> seq;
+vector<pair<ll,ll> > v(1000+5);
+
+bool compare(const pair<ll,ll> &a, const pair<ll,ll> &b) {
   // 왼쪽 변수 a, 오른쪽 변수 b에 대해서
   // a<b 라면 오른쪽이 더 크도록 정렬, a>b 라면 왼쪽이 더 크도록 정렬
   // a가 b보다 앞에 와야 한다면 true, 아니면 false (같을때는 꼭 false 반환하도록 해야 함)
   // 래퍼런스 사용하는게 좋음
-  return true;
+  if(a.second != b.second) return (b.second < a.second);
+  return seq[a.first] < seq[b.first];\
 }
 
 // 셋 정렬용 구조체
@@ -40,28 +47,23 @@ struct setOrder {
   }
 };
 
-ll n, c;
-map<ll,ll> tmp;
-vector<pair<ll,ll> > v;
 
 int main(void) {
   ios::sync_with_stdio(0); cin.tie(0);
   cin >> n >> c;
   for(int i=0; i<n; i++) {
-    ll num;
-    cin >> num;
-    if(tmp.find(num)!=tmp.end()) {
-      tmp[num]++;
-    } else {
-      tmp[num] = 1;
+    ll tmp;
+    cin >> tmp;
+    if(seq.find(tmp) == seq.end()) {
+      seq[tmp] = cnt++;
+      v[seq[tmp]] = mp(tmp,0);
     }
+    v[seq[tmp]].second++;
   }
-  for(auto it=tmp.begin(); it!=tmp.end(); ++it) {
-    v.push_back(mp(it->second, it->first));
-  }
-  stable_sort(v.begin(), v.end(), greater<pair<ll,ll> >());
-  for(auto it=v.begin(); it!=v.end(); ++it) {
-    for(int i=0; i<it->first; i++) cout << it->second << " ";
+  sort(v.begin(), v.begin()+cnt, compare);
+  for(int i=0; i<cnt; i++) {
+    pair<ll,ll> pll = v[i];
+    for(int j=0; j<pll.second; j++) cout << pll.first << " ";
   }
   return 0;
 }
