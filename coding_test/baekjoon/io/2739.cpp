@@ -1,16 +1,23 @@
 /*
-Time : 2022.02.11 (10 mins)
-Problem : BOJ1152 (https://www.acmicpc.net/problem/1152)
+Time : 2022.02.12 (10 mins)
+Problem : BOJ2739 (https://www.acmicpc.net/problem/2739)
 Algorithm Type : IO
 Outline :
-단어가 공백으로 구분되어 입력된다.
-단어의 개수를 출력한다.
+정수 N이 주어지면 N에 대한 구구단을 출력한다.
 Method :
-연속해서 들어오는 공백은 없으므로 공백의 개수 + 1 을 출력한다.
+반복문을 통해 출력한다.
 Example :
-The Curious Case of Benjamin Button
+2
 -------
-6
+2 * 1 = 2
+2 * 2 = 4
+2 * 3 = 6
+2 * 4 = 8
+2 * 5 = 10
+2 * 6 = 12
+2 * 7 = 14
+2 * 8 = 16
+2 * 9 = 18
 */
 #include <bits/stdc++.h>
 using namespace std;
@@ -52,9 +59,10 @@ int splitStringByToken(vector<string> &v, string &s, const char &del) {
 
 int main(void) {
   ios::sync_with_stdio(0); cin.tie(0);
-  string s;
-  vector<string> tokens;
-  getline(cin,s);
-  cout << splitStringByToken(tokens, s, ' ');
+  int n;
+  cin >> n;
+  for(int i=1; i<=9; i++) {
+    cout << n << " * " << i << " = " << n*i << "\n";
+  }
   return 0;
 }
