@@ -1,26 +1,21 @@
 /*
-Time : 2022.02.14 (30 mins)
-Problem : BOJ15988 (https://www.acmicpc.net/problem/15988)
+Time : 2022.02.15 (30 mins)
+Problem : BOJ2302 (https://www.acmicpc.net/problem/2302)
 Algorithm Type : DP
 Outline :
-정수 N을 1,2,3의 합으로 나타내는 방법의 수를 출력한다.
-수가 커질 수 있으므로 1000000009로 나눈 나머지를 출력한다.
+1번부터 N번까지 좌석 번호와 공연을 보러 온 사람의 좌석 번호가 주어진다.
+좌석 번호가 주어지면 해당 사람은 그 번호 뿐만 아니라 양 옆의 번호에도 앉을 수 있다.
+VIP 자리는 해당 VIP만 앉을 수 있다.
+사람들이 좌석에 앉는 서로다른 가짓수를 출력한다.
 Method :
-정수 4를 1,2,3의 합으로 나타내는 경우는 다음과 같이 나눌 수 있다.
-1. (1을 합으로 나타내는 경우의 수) + (3을 붙임)
-2. (2를 합으로 나타내는 경우의 수) + (2를 붙임)
-3. (3을 합으로 나타내는 경우의 수) + (1을 붙임)
-위와 같이 세 가지의 합으로 경우의 수를 표현할 수 있다.
-따라서 이를 확장하여 정수 n은 n-1, n-2, n-3번째 dp배열을 이용하여 구할 수 있다.
+
 Example :
-3
+9
+2
 4
 7
-10
 -------
-7
-44
-274
+12
 */
 #include <bits/stdc++.h>
 using namespace std;
@@ -60,27 +55,48 @@ int splitStringByToken(vector<string> &v, string &s, const char &del) {
   return v.size();
 }
 
+int n, m;
+int a[40+5];
+int d[40+5][2]; // 0일 경우 i번째 자리에 i번째 사람이
+
 int main(void) {
   ios::sync_with_stdio(0); cin.tie(0);
-  int n;
-  ll d[1000000+5] = {};
 
-  d[0] = 0LL;
-  d[1] = 1LL;
-  d[2] = 2LL;
-  d[3] = 4LL;
+  cin >> n;
+  cin >> m;
+
+  for (int i=0; i<m; i++) {
+    int vip;
+    cin >> vip;
+    a[vip] = 1;
+  }
+
+  d[1][0] = 1;
+  d[1][1] = 0;
+
+  for (int i=2; i<=n; i++) {
+    d[i][0] = d[i-1][0] + d[i-1][1];
+    if (a[i]) {
+      // VIP석일 경우
+      d[i][1] = 0; // 무조건 VIP가 앉음
+    } else {
+      // 일반석일 경우
+      d[i][1] = (a[i-1] ? 0 : d[i-1][0]);
+    }
+  }
   
-  for (int i=4; i<=1000000; i++) {
-    d[i] = ((d[i-1] + d[i-2]) % 1000000009LL + d[i-3]) % 1000000009LL;
+  int ans = 0;
+  for (int i=1; i<=n; i++) {
+    int cur = 0;
+    for (int j=0; j<2; j++) {
+      cur += d[i][j];
+      // cout << d[i][j] << " " ;
+    }
+    // cout << '\n';
+    ans = max(ans, cur);
   }
 
-  int tc;
-  cin >> tc;
-
-  while (tc--) {
-    cin >> n;
-    cout << d[n] << "\n";
-  }
+  cout << ans;
 
   return 0;
 }

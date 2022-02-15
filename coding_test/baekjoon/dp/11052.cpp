@@ -1,26 +1,23 @@
 /*
-Time : 2022.02.14 (30 mins)
-Problem : BOJ15988 (https://www.acmicpc.net/problem/15988)
+Time : 2022.02.15 (30 mins)
+Problem : BOJ11052 (https://www.acmicpc.net/problem/11052)
 Algorithm Type : DP
 Outline :
-정수 N을 1,2,3의 합으로 나타내는 방법의 수를 출력한다.
-수가 커질 수 있으므로 1000000009로 나눈 나머지를 출력한다.
+N가지 카드팩의 가격이 주어진다.
+카드팩에는 첫번째 카드팩에는 1개, 두번째 카드팩에는 2개, ... 이런식으로 카드가 들어있다.
+N개의 카드를 구매하려고 할 때, 가격의 최댓값을 출력한다.
 Method :
-정수 4를 1,2,3의 합으로 나타내는 경우는 다음과 같이 나눌 수 있다.
-1. (1을 합으로 나타내는 경우의 수) + (3을 붙임)
-2. (2를 합으로 나타내는 경우의 수) + (2를 붙임)
-3. (3을 합으로 나타내는 경우의 수) + (1을 붙임)
-위와 같이 세 가지의 합으로 경우의 수를 표현할 수 있다.
-따라서 이를 확장하여 정수 n은 n-1, n-2, n-3번째 dp배열을 이용하여 구할 수 있다.
+d[i]를 다음과 같이 정의한다.
+"카드의 개수를 i개 선택했을 때 결제할 수 있는 최대 금액"
+그러면 d[i] 은 다음과 같은 점화식을 가진다.
+d[i] = max(d[j]+d[i-j]) where 0 <= j <= i
+즉, 카드 i개를 선택했을 때의 최대값은
+[카드0개]+[카드i개] / [카드1개]+[카드i-1개] / ... 의 d값의 합 중 최댓값을 선택하면 된다.
 Example :
-3
 4
-7
-10
+1 5 6 7
 -------
-7
-44
-274
+10
 */
 #include <bits/stdc++.h>
 using namespace std;
@@ -60,27 +57,26 @@ int splitStringByToken(vector<string> &v, string &s, const char &del) {
   return v.size();
 }
 
+int n;
+int a[1000+5];
+int d[1000+5];
+
 int main(void) {
   ios::sync_with_stdio(0); cin.tie(0);
-  int n;
-  ll d[1000000+5] = {};
 
-  d[0] = 0LL;
-  d[1] = 1LL;
-  d[2] = 2LL;
-  d[3] = 4LL;
-  
-  for (int i=4; i<=1000000; i++) {
-    d[i] = ((d[i-1] + d[i-2]) % 1000000009LL + d[i-3]) % 1000000009LL;
+  cin >> n;
+  for (int i=1; i<=n; i++) {
+    cin >> a[i];
+    d[i] = a[i];
   }
 
-  int tc;
-  cin >> tc;
-
-  while (tc--) {
-    cin >> n;
-    cout << d[n] << "\n";
+  for (int i=1; i<=n; i++) {
+    for (int j=0; j<=i; j++) {
+      d[i] = max(d[i], d[j]+d[i-j]);
+    }
   }
+
+  cout << d[n];
 
   return 0;
 }

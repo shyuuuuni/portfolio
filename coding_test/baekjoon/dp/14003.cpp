@@ -114,7 +114,5 @@ int main(void) {
     ans.pop();
   }
 
-  
-
   return 0;
 }
