@@ -8,7 +8,10 @@ n개의 건물과 그 사이를 잇는 m개의 길이 주어진다.
 어떤 두 건물 사이의 길은 한개뿐이고, 현재 길로는 도착할 수 없는 건물이 존재할 수 있다.
 출발 건물과 도착 건물이 주어졌을 때, 최소 몇개의 길을 양방향으로 바꾸어야 해당 도착 건물로 도착할 수 있는지 출력하는 프로그램을 작성한다.
 Method :
-
+플로이드 와샬 알고리즘에서 dist값을 해당 위치로 이동하는데 필요한 양방향으로 만들 길의 수로 정의한다.
+그러면 길이 주어질 때, 양방향인 경우 dist[a][b] = dist[b][a] = 0, 단방향인 경우 dist[a][b] = 0, dist[b][a] = min(기존값,1) 이 된다.
+(왜냐하면 단방향 길이면 양방향으로 만들어서 이동 가능 하므로)
+따라서 위와 같이 초기값을 주고, 플로이드 와샬 알고리즘으로 모든 정점에서 최소 개수를 계산하고 쿼리를 처리하면 된다.
 Example :
 4 3
 1 2 0
@@ -62,43 +65,46 @@ bool outOfBound1(int x, int y, int m, int n) {
 }
 
 const int INF = 0x3f3f3f3f;
-const int N = 405;
-int v, e;
+const int N = 255;
+int n, m, k;
 int dist[N][N];
 
 int main(void) {
-  cin >> v >> e;
-  fill(&dist[0][0], &dist[N-1][N], INF);
-  while (e--) {
-    int a, b, c;
+  ios::sync_with_stdio(0); cin.tie(0); // FAST IO
+  cin >> n >> m;
+  fill(&dist[0][0], &dist[N-1][N], INF); // dist[a][b] : a->b로 이동할 때 뚫은 양방향 길 개수
+  int a, b, c;
+  while (m--) {
     cin >> a >> b >> c;
-    if (c < dist[a][b]) {
-      dist[a][b] = c;
+    if (c==0) { // 일방 통행
+      dist[a][b] = 0;
+      if (dist[b][a] == INF)
+        dist[b][a] = 1; // 양방향으로 길을 확장했을 때 가능
+    } else { // 양 방향
+      if (0 < dist[a][b])
+        dist[a][b] = 0;
+      if (0 < dist[b][a])
+        dist[b][a] = 0;
     }
   }
-  for (int i=1; i<=v; i++) dist[i][i] = 0;
-  // FW
-  for (int k=1; k<=v; k++) {
-    for (int i=1; i<=v; i++) {
-      for (int j=1; j<=v; j++) {
+  for (int i=1; i<=n; i++) dist[i][i] = 0;
+  /*
+  algorithm
+  */
+  for (int k=1; k<=n; k++) {
+    for (int i=1; i<=n; i++) {
+      for (int j=1; j<=n; j++) {
         if (dist[i][j] > dist[i][k] + dist[k][j]) {
           dist[i][j] = dist[i][k] + dist[k][j];
         }
       }
     }
   }
-  int ans = INF;
-  for (int i=1; i<=v; i++) { // 출발지
-    for (int j=1; j<=v; j++) {
-      if (i==j) continue;
-      if (dist[i][j] + dist[j][i] < ans) {
-        ans = dist[i][j] + dist[j][i];
-      }
-    }
+  cin >> k;
+  int s, e;
+  while (k--) {
+    cin >> s >> e;
+    cout << dist[s][e] << "\n";
   }
-
-  if (INF <= ans) cout << -1;
-  else cout << ans;
-
   return 0;
 }
