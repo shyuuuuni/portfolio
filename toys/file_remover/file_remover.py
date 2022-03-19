@@ -30,7 +30,7 @@ def to_format(raw, type):
     return result
 
 
-# Reading Target file list from argument '--env'
+# Reading Target file list from argument '--target'
 # Return list of filename
 def read_file(target_file, file_type):
     result = []
