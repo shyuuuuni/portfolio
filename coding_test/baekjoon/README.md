@@ -2,7 +2,6 @@
 
 
 <img alt="C++" src ="https://img.shields.io/badge/c++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white"/>
-
 <img alt="Github" src ="https://img.shields.io/badge/github-181717?style=flat-square&logo=github&logoColor=white"/>
 
 ---
