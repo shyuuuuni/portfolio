@@ -33,3 +33,7 @@ vector<int> solution(vector<string> enroll, vector<string> referral, vector<stri
     
     return answer;
 }
+
+int main(void) {
+    return 0;
+}
