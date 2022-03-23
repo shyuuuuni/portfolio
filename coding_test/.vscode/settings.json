@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "memory": "cpp",
-        "regex": "cpp",
-        "utility": "cpp",
-        "iostream": "cpp"
-    }
-}
