@@ -1,6 +1,6 @@
 ## 2021 Dev-Matching: 웹 백엔드 개발자(상반기)
 
-<img alt="C++" src ="https://img.shields.io/badge/c++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white"/> <img alt="Github" src ="https://img.shields.io/badge/github-181717?style=flat-square&logo=github&logoColor=white"/>
+<img alt="C++" src ="https://img.shields.io/badge/c++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white"/> <img alt="MySQL" src ="https://img.shields.io/badge/mysql-4479A1?style=flat-square&logo=mysql&logoColor=white"/> <img alt="Github" src ="https://img.shields.io/badge/github-181717?style=flat-square&logo=github&logoColor=white"/>
 
 ---
 
