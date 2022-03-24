@@ -10,6 +10,15 @@
 
 <img src='https://img.shields.io/badge/score-4/7-yellow'>
 
+|                                                                             **Name**                                                                             | **Difficulty** | **Success** |
+|:----------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------:|:-----------:|
+| [신규 아이디 추천](https://github.com/shyuuuuni/portfolio/blob/master/ProblemSolving/programmers/2021%20KAKAO%20BLIND%20RECRUITMENT/01_신규%20아이디%20추천.cpp) |      Lv.1      |      O      |
+|       [메뉴 리뉴얼](https://github.com/shyuuuuni/portfolio/blob/master/ProblemSolving/programmers/2021%20KAKAO%20BLIND%20RECRUITMENT/02_메뉴%20리뉴얼.cpp)       |      Lv.2      |      O      |
+|         [순위 검색](https://github.com/shyuuuuni/portfolio/blob/master/ProblemSolving/programmers/2021%20KAKAO%20BLIND%20RECRUITMENT/03_순위%20검색.cpp)         |      Lv.2      |      O      |
+|   [합승 택시 요금](https://github.com/shyuuuuni/portfolio/blob/master/ProblemSolving/programmers/2021%20KAKAO%20BLIND%20RECRUITMENT/04_합승%20택시%20요금.cpp)   |      Lv.3      |      O      |
+|                                                                                                                                                                  |      Lv.3      |      X      |
+|                                                                                                                                                                  |      Lv.3      |      X      |
+|                                                                                                                                                                  |      Lv.4      |      X      |
 
 
 ---
