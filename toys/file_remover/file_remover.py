@@ -33,7 +33,9 @@ def to_format(raw, type):
 # Reading Target file list from argument '--target'
 # Return list of filename
 def read_file(target_file, file_type):
-    result = []
+    filelist = []
+    framelist = []
+    # result = []
     
     try :
         f = open(target_file, 'r')
@@ -41,31 +43,61 @@ def read_file(target_file, file_type):
             line = f.readline().split()
             if not line: break
             if len(line) == 1: # abc
-                result += to_format(line[0], file_type) # remove abc.png
+                framelist.append(line[0])
+                filelist += to_format(line[0], file_type) # remove abc.png
             elif len(line) == 2: # abc def
                 for raw in range(int(line[0]), int(line[1])+1): # remove abc.png~def.png
-                    result += to_format(str(raw), file_type)
+                    framelist.append(str(raw))
+                    filelist += to_format(str(raw), file_type)
         f.close()
 
     except:
         print("[Error] Reading target_file error.")
-        result = []
+        filelist = []
+        framelist = []
 
-    return result
+    return filelist, framelist
+
+
+# 변경 사항을 적용한다
+def apply_changes(file_list, frame_list, path, type):
+    # 파일 삭제
+    for filename in file_list:
+            file_path = args.path + filename
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+            # print(file_path)
+    
+    # gt파일 수정
+    if type == 'gt':
+        new_f = open(path+'gt_after.txt', 'w')
+        prv_f = open(path+'gt.txt', 'r')
+
+        while True:
+            line = prv_f.readline()
+            if not line: break
+            frame_no = line.split(',')[0]
+            if (frame_no in frame_list):
+                continue
+            else:
+                new_f.write(line)
+
+        new_f.close()
+        prv_f.close()
+
+        print("gt file changes at" + path+'gt_after.txt')
+
+
 
 if __name__ == '__main__':
     args = parser.parse_args()
 
     if (os.path.isdir(args.path) and os.path.isfile(args.target)):
-        remove_list = read_file(args.target, args.type)
-        total = len(remove_list)
-        for i, filename in enumerate(remove_list):
-            file_path = args.path + filename
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-            msg = '\rProgress : %d%%'%(i/total)
-            print(msg, end='')
-        print('\rRemove success.')
+        filelist, framelist = read_file(args.target, args.type)
+        apply_changes(file_list=filelist, frame_list=framelist, path=args.path, type=args.type)
+
+        
+        print('\nRemove success.')
 
     else:
         print("[Error] Argument file or folder path is not exist. Exit program.")
