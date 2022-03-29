@@ -40,6 +40,9 @@ class Trie {
                 }
                 cursor = cursor->children[toInteger(element)];
             }
+            if (!cursor->isTerminal) {
+                result = false;
+            }
             return result;
         }
 };
