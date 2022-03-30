@@ -29,6 +29,6 @@
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://programmers.co.kr/learn/challenges
 
-[카카오 공식 Tech Blog 풀이](https://tech.kakao.com/2021/01/25/2021-kakao-recruitment-round-1/)
+[카카오 공식 Tech Blog 풀이](https://tech.kakao.com/2019/10/02/kakao-blind-recruitment-2020-round1/)
 
 해당 저장소는 프로그래머스의 [저작권](https://programmers.zendesk.com/hc/ko/articles/360034546572-프로그래머스의-알고리즘-문제-풀이를-개인-블로그-GitHub-기타-사이트에-올려도-되나요-)을 준수합니다.
